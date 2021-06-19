@@ -13,8 +13,8 @@ export default function App() {
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name= 'CadastroMed' component={CadastroMed}/>
-        <Stack.Screen name= 'CadastroUsu' component={CadastroUsu}/>
+        <Stack.Screen name= 'CadastroUsu' component={CadastroUsu}/> 
+        <Stack.Screen name= 'CadastroMed' component={CadastroMed}/>        
       </Stack.Navigator>
     </NavigationContainer>
   )

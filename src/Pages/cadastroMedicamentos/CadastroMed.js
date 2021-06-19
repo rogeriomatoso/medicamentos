@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput,
          TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import firebase from '../../components/fireBaseConnection';
-import Relatorio from '../../components/Relatorio';
+import { useNavigation } from '@react-navigation/native';
 
+import Relatorio from '../../components/Relatorio';
+import CadastroUsu from '../cadastroUsuario/cadastroUsu';
 
 export default function Cadastro(){
-    
+
+  const navigation = useNavigation(); 
   const [nome, setNome] = useState('');
   const [referencia, setReferencia] = useState('');
   const [principioAtivo, setPrincippioAtivo] = useState('');
@@ -69,6 +72,11 @@ async function inserir(){
   }
 }
 
+function logout(){
+  navigation.navigate('CadastroUsu');
+}
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.texto}>Medicamento:</Text>
@@ -119,16 +127,16 @@ async function inserir(){
           style={styles.textBtn}
           onPress={inserir}
         >
-          <Text style={{ color: '#fff', fontSize: 18}}>INSERIR</Text>          
+          <Text style={{ color: '#fff', fontSize: 15}}>INSERIR</Text>          
         </TouchableOpacity>
 
          <Text>    </Text> 
 
         <TouchableOpacity
           style={styles.textBtn}
-           // onPress = {()=> }
+           onPress = {logout}
         >
-          <Text style={{ color: '#fff', fontSize: 18}}>LOGOUT</Text>          
+          <Text style={{ color: '#fff', fontSize: 15}}>LOGOUT</Text>          
         </TouchableOpacity>
      </View>
 
@@ -172,8 +180,8 @@ const styles = StyleSheet.create({
      padding: 5,
      backgroundColor: '#48636f',
      alignItems: 'center',
-     height: 40, 
-     width: 150,        
+     height: 30, 
+     width: 100,        
      borderRadius: 10,        
    },
 
@@ -184,7 +192,7 @@ const styles = StyleSheet.create({
      borderColor: '#121212',
      backgroundColor: '#cdcdcd',
      borderRadius: 5,
-     height: 35,
+     height: '1.5%',     
      fontSize: 17
    },
 });
