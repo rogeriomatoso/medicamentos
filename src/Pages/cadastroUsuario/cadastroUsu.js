@@ -9,30 +9,81 @@ import CadastroMed from '../cadastroMedicamentos/CadastroMed';
 
 export default function CadastroUsu(){
 
-    const navigation = useNavigation();
+   // const navigation = useNavigation();
+   const [nome, setNome] = useState('');
+   const [email, setEmail] = useState('');
+   const [cidade, setCidade] = useState('');
+   const [password, setPassword] = useState('');
 
     function Login(){
-        navigation.navigate('CadastroMed');
+        //navigation.navigate('CadastroMed');
+    }
+
+    function logout(){
+     //navigation.navigate('CadastroUsu');
+    }
+
+    async function cadastrar(){
+      await firebase.auth().createUserWithEmailAndPassword(email,password)
+        .then((value)=>{
+          alert('Usuario criado!')
+          
+        })
+        .catch((error)=>{
+          if(error.code === 'auth/weak-password'){
+            alert('Senhas devem ter mo minimo 6 caracteres!');
+            return;
+          }
+          if(error.code === 'auth/invalid-email'){
+            alert('Email invalido!')
+            return;
+          }
+          else{
+            alert('Algo deu errado!')
+            return;
+          }
+        })
     }
 
     return(
-        <View>            
+        <View style={styles.container}>            
+
+          <Text style={styles.texto}>Nome:</Text>
+          <TextInput
+          style={styles.input}
+          underlineColorAndroid='transparent'
+          onChangeText = {(texto)=>setNome(texto)}
+          value = {nome}
+          />
+          <Text style={styles.texto}>E-mail:</Text>
+          <TextInput
+          style={styles.input}
+          underlineColorAndroid='transparent'
+          onChangeText = {(texto)=>setEmail(texto)}
+          value = {email}
+          />
+          <Text style={styles.texto}>Cidade:</Text>
+          <TextInput
+          style={styles.input}
+          underlineColorAndroid='transparent'
+          onChangeText = {(texto)=>setCidade(texto)}
+          value = {cidade}
+          />
+          <Text style={styles.texto}>Senha:</Text>
+          <TextInput
+          style={styles.input}
+          underlineColorAndroid='transparent'
+          onChangeText = {(texto)=>setPassword(texto)}
+          value = {password}
+          />
+
           <View style={styles.btn}>
             <TouchableOpacity
             style={styles.textBtn}
-            //onPress={inserir}
+            onPress={cadastrar}
             >
             <Text style={{ color: '#fff', fontSize: 15}}>ENVIAR</Text>          
-            </TouchableOpacity>
-
-            <Text>    </Text> 
-
-            <TouchableOpacity
-            style={styles.textBtn}
-            onPress = {Login}
-            >
-            <Text style={{ color: '#fff', fontSize: 15}}>LOGIN</Text>          
-            </TouchableOpacity>
+            </TouchableOpacity>            
           </View>
         </View>
     )

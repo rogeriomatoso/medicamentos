@@ -9,7 +9,7 @@ import CadastroUsu from '../cadastroUsuario/cadastroUsu';
 
 export default function Cadastro(){
 
-  const navigation = useNavigation(); 
+ // const navigation = useNavigation(); 
   const [nome, setNome] = useState('');
   const [referencia, setReferencia] = useState('');
   const [principioAtivo, setPrincippioAtivo] = useState('');
@@ -71,12 +71,6 @@ async function inserir(){
     alert('Preencha todo o formulário!');
   }
 }
-
-function logout(){
-  navigation.navigate('CadastroUsu');
-}
-
-
   return (
     <View style={styles.container}>
       <Text style={styles.texto}>Medicamento:</Text>
@@ -128,16 +122,7 @@ function logout(){
           onPress={inserir}
         >
           <Text style={{ color: '#fff', fontSize: 15}}>INSERIR</Text>          
-        </TouchableOpacity>
-
-         <Text>    </Text> 
-
-        <TouchableOpacity
-          style={styles.textBtn}
-           onPress = {logout}
-        >
-          <Text style={{ color: '#fff', fontSize: 15}}>LOGOUT</Text>          
-        </TouchableOpacity>
+        </TouchableOpacity>        
      </View>
 
       {loading ?
