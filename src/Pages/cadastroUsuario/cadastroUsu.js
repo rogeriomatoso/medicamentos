@@ -14,18 +14,36 @@ export default function CadastroUsu(){
    const [email, setEmail] = useState('');
    const [cidade, setCidade] = useState('');
    const [password, setPassword] = useState('');
+   const [user, setUser] = useState('');
 
-    function Login(){
-        //navigation.navigate('CadastroMed');
+    async function Login(){
+       await firebase.auth().signInWithEmailAndPassword(email, password)
+       .then((value)=>{
+         alert('Bem-vindo(a): ' + value.user.email);
+         setUser(value.user.email);
+       })
+       .catch((error)=>{
+         alert('Algo deu errado...');
+         return;
+       })
+       setEmail('');
+       setPassword('');
     }
 
-    function logout(){
-     //navigation.navigate('CadastroUsu');
+    async function logout(){
+     await firebase.auth().signOut();
+     setUser('');
+     alert('Voce saiu do sistema!');
     }
+    
 
     async function cadastrar(){
       await firebase.auth().createUserWithEmailAndPassword(email,password)
         .then((value)=>{
+          firebase.database().ref('usuarios').child(value.user.uid).set({
+            nome: nome,
+            cidade: cidade
+          })
           alert('Usuario criado!')
           
         })
@@ -43,6 +61,10 @@ export default function CadastroUsu(){
             return;
           }
         })
+        setNome('');
+        setEmail('');
+        setCidade('');
+        setPassword('');
     }
 
     return(
@@ -72,6 +94,7 @@ export default function CadastroUsu(){
           <Text style={styles.texto}>Senha:</Text>
           <TextInput
           style={styles.input}
+          secureTextEntry={true}
           underlineColorAndroid='transparent'
           onChangeText = {(texto)=>setPassword(texto)}
           value = {password}
@@ -83,8 +106,35 @@ export default function CadastroUsu(){
             onPress={cadastrar}
             >
             <Text style={{ color: '#fff', fontSize: 15}}>ENVIAR</Text>          
-            </TouchableOpacity>            
-          </View>
+            </TouchableOpacity>
+            <Text>   </Text>
+            <TouchableOpacity
+             style={styles.textBtn}
+             onPress={Login}
+            >
+            <Text style={{ color: '#fff', fontSize: 15}}>ACESSAR</Text>          
+            </TouchableOpacity>
+          </View> 
+
+          <View style={{marginTop: 20}}></View>          
+            
+          <Text style={{fontSize: 18, textAlign: 'center'}}>{user}</Text>
+          { user.length > 0 ?
+            (
+              <View style={styles.btn}>  
+              <TouchableOpacity
+              style={styles.textBtn}
+              onPress={logout}
+              >
+              <Text style={{ color: '#fff', fontSize: 15}}>SAIR</Text>          
+              </TouchableOpacity>
+            </View>
+            )
+            :
+            (
+              <Text style={{fontSize: 18, textAlign: 'center'}}>Stand By...</Text>
+            )             
+          } 
         </View>
     )
 }
@@ -100,7 +150,8 @@ const styles = StyleSheet.create({
          fontSize: 18,
        },
     
-       btn:{        
+       btn:{           
+        flexDirection: 'row',
         marginTop: 10,
         marginBottom: 15, 
         justifyContent: 'center',
