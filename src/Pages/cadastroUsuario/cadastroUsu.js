@@ -105,7 +105,7 @@ export default function CadastroUsu(){
             style={styles.textBtn}
             onPress={cadastrar}
             >
-            <Text style={{ color: '#fff', fontSize: 15}}>ENVIAR</Text>          
+            <Text style={{ color: '#fff', fontSize: 15}}>CADASTRAR</Text>          
             </TouchableOpacity>
             <Text>   </Text>
             <TouchableOpacity
